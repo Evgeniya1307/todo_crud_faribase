@@ -6,27 +6,42 @@ import Todo from "./components/Todo";
 import {
   collection,
   query,
-  onSnapsHot,
+  onSnapshot,
   doc,
   updateDoc,
   deleteDoc,
-} from "firebase/firebase";
+} from "firebase/firestore";
 import { db } from "./firebase";
-import { querySnapshot } from "firebase/firestore";
 
-const App = () => {
-  const[todo, setTodos]= React.useState([]);
+
+
+function App (){
+  const[todos, setTodos]= React.useState([]);
 
   //получаю данные 
 React.useEffect(()=>{
 const q= query(collection(db,"todos"));
-const unsub= onSnapsHot(q,(QuerySnapshot)=>{ //запрос
-  let todosArray=[]//временный массив для задач
+const unsub= onSnapshot(q,(querySnapshot)=>{ //запрос
+  let todosArray=[];//временный массив для задач
   querySnapshot.forEach((doc)=>{
-    todosArray.push();//каждое действие помещаю во временный массив
+    todosArray.push({...doc.data(), id:doc.id});//каждое действие помещаю во временный массив
   })
+  setTodos(todosArray)
 }) 
-},[])
+return()=> unsub()
+},[]);
+
+const handleEdit = async (todo, title)=>{ //обновила функцию редактирования
+  await updateDoc(doc(db, "todos", todo.id), {title:title});
+};
+const toggleComplete = async(todo)=>{
+  await updateDoc(doc(db, "todos", todo.id),{ //будет обновляться если задача завершена или нет 
+    completed: !todo.completed
+  });
+};
+const handleDelete = async(id)=>{
+  await deleteDoc(doc(db, "todos", id))
+}
 
   return (
     <div className="App">
@@ -35,6 +50,17 @@ const unsub= onSnapsHot(q,(QuerySnapshot)=>{ //запрос
       </div>
       <div>
       <AddTodo/>
+      </div>
+      <div className="todo_container">
+      {todos.map((todo)=>(
+        <Todo
+        key={todo.id}
+        todo={todo}
+        toggleComplete={toggleComplete}
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}/>
+
+      ))}
       </div>
     </div>
   );
