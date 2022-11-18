@@ -1,7 +1,7 @@
 import React from 'react'
 import { db } from '../firebase'
 import {collection, addDoc} from "firebase/firestore";
-import { async } from '@firebase/util';
+
 
 
 export default  function AddTodo(){
@@ -22,7 +22,7 @@ export default  function AddTodo(){
         <div className='input_container'>
         <input 
         type="text"
-        placeholder="Enter todo..."
+        placeholder="Введите список дел..." //
         value={title}
         onChange={(e)=> setTitle(e.target.value)}
         />
