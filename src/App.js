@@ -12,7 +12,7 @@ import {
   deleteDoc,
 } from "firebase/firebase";
 import { db } from "./firebase";
-import { QuerySnapshot } from "firebase/firestore";
+import { querySnapshot } from "firebase/firestore";
 
 const App = () => {
   const[todo, setTodos]= React.useState([]);
@@ -21,7 +21,10 @@ const App = () => {
 React.useEffect(()=>{
 const q= query(collection(db,"todos"));
 const unsub= onSnapsHot(q,(QuerySnapshot)=>{ //запрос
-  let todosArray=[]//временный массив для
+  let todosArray=[]//временный массив для задач
+  querySnapshot.forEach((doc)=>{
+    todosArray.push();//каждое действие помещаю во временный массив
+  })
 }) 
 },[])
 
