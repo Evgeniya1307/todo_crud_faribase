@@ -3,7 +3,7 @@ import { db } from '../firebase'
 import {collection, addDoc} from "firebase/firestore";
 
 
-
+//добавления документа
 export default  function AddTodo(){
     const[title, setTitle] = React.useState("");
 
@@ -28,7 +28,7 @@ export default  function AddTodo(){
         />
         </div>
         <div className='btn_container'>
-        <button>Add</button>
+        <button>Добавить</button>
         </div>
         </form>
     );
