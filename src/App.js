@@ -17,7 +17,7 @@ import { db } from "./firebase"; //
 
 function App (){
   const[todos, setTodos]= React.useState([]);
-
+ 
   //получаю данные 
 React.useEffect(()=>{
 const q= query(collection(db,"todos"));
@@ -40,7 +40,7 @@ const toggleComplete = async(todo)=>{
   });
 };
 const handleDelete = async(id)=>{
-  await deleteDoc(doc(db, "todos", id))
+  await deleteDoc(doc(db, "todos", id)) //на удаление 
 }
 
   return (
@@ -49,7 +49,7 @@ const handleDelete = async(id)=>{
         <Title />
       </div>
       <div>
-      <AddTodo/>
+      <AddTodo />
       </div>
       <div className="todo_container">
       {todos.map((todo)=>(

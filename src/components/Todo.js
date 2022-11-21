@@ -1,8 +1,11 @@
 //для задач
 import React from "react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";//на редактирование 
+import DeleteIcon from "@mui/icons-material/Delete";//на удаление 
+
+
+
 export default function Todo({ todo, toggleComplete, handleDelete, handleEdit,}) {
   const [newTitle, setNewTitle] = React.useState(todo.title);
    
@@ -25,6 +28,7 @@ export default function Todo({ todo, toggleComplete, handleDelete, handleEdit,})
       className="list"
       onChange={handleChange} //фу-ия для обработки
     />
+
     <div>
         <button
           className="button-complete"
