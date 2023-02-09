@@ -16,17 +16,18 @@ import { db } from "./firebase"; //
 
 
 function App (){
-  const[todos, setTodos]= React.useState([]);
+  const [tasks, setTasks] = React.useState([]);
+  const [task, setTask] = React.useState({});
  
   //получаю данные 
 React.useEffect(()=>{
-const q= query(collection(db,"todos"));
+const q= query(collection(db,"tasks"));
 const unsub= onSnapshot(q,(querySnapshot)=>{ //запрос
-  let todosArray=[];//временный массив для задач
+  let tasksArray=[];//временный массив для задач
   querySnapshot.forEach((doc)=>{
-    todosArray.push({...doc.data(), id:doc.id});//каждое действие помещаю во временный массив
+    tasksArray.push({...doc.data(), id:doc.id});//каждое действие помещаю во временный массив
   })
-  setTodos(todosArray)
+  setTasks(tasksArray)
 }) 
 return()=> unsub()
 },[]);
@@ -49,10 +50,10 @@ const handleDelete = async(id)=>{
         <Title />
       </div>
       <div>
-      <AddTodo />
+      <AddTodo task={task} tasks={tasks} setTasks={setTasks} setTask={setTask}/>
       </div>
       <div className="todo_container">
-      {todos.map((todo)=>(
+      {tasks.map((task)=>(
         <Todo
         key={todo.id}
         todo={todo}
